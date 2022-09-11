@@ -6,8 +6,10 @@ Obscuro is a command line tool that you can use to encrypt or decrypt particular
 
 ## INSTALLATION 
 1) ```pip3 install cryptography```
-2) ```git clone ```
-3)
+2) ```git clone https://github.com/dogaegeozden/obscuro.git```
+3) ```cd obscuro```
+4) ```sudo cp obscuro /usr/bin/```
+5) ```sudo chown $USER:$USER /usr/bin/obscuro && sudo chmod u+x /usr/bin/obscuro```
 
 ## OPTIONS
     -e, --encrypt 
