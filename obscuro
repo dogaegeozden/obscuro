@@ -9,7 +9,7 @@ from sys import argv
 helpOpts = ["--help", "-help", "-?", "-h"]
 encOpts = ["-e", "--encrypt"]
 decOpts = ["-d", "--decrypt"]
-recurOpts = ["-r", "--recursive", "-recursive"]
+recurOpts = ["-r", "--recursive"]
 recurChoice = None
 listOfTargetFolPs = []
 listOfTargetFilPs = []
