@@ -1,6 +1,6 @@
 # OBSCURO 
 
-![ObscuroLogo](https://cdn.pixabay.com/photo/2017/07/26/11/47/magic-2541458_960_720.jpg)
+![ObscuroLogo](https://raw.githubusercontent.com/dogaegeozden/obscuro/main/obscuro.jpg)
 
 Obscuro is a command line tool to encrypt or decrypt files or folder. You can also encrypt or decrypt folders recursively by using the "-r" option. Otherwise, subdirectories will be skipped and only the files in the target folder will be encrypted.
 
@@ -8,7 +8,8 @@ Obscuro is a command line tool to encrypt or decrypt files or folder. You can al
 1) ```pip3 install cryptography```
 2) ```git clone https://github.com/dogaegeozden/obscuro.git```
 3) ```cd obscuro```
-4) ```sudo dpkg -i obscuro.deb```
+4) ```sudo cp obscuro /usr/bin/```
+5) ```sudo chown $USER:$USER /usr/bin/obscuro && sudo chmod u+x /usr/bin/obscuro```
 
 ## OPTIONS
     -e, --encrypt 
