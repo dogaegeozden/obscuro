@@ -10,7 +10,7 @@ from logging import basicConfig, DEBUG, debug, disable, CRITICAL
 # Doing the basic configuration for the debugging feature
 basicConfig(level=DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Comment out the line to enable debugging.
+# Disabling debugging. Hint: Comment out the line to enable debugging.
 disable(CRITICAL)
 
 # VARIABLES
@@ -29,7 +29,7 @@ listOfTargetFolPs = []
 # Creating list for the target files' paths
 listOfTargetFilPs = []
 # Creating a help page by concatenating strings
-helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\n\t" + 'obscuro - A command line encryption tool that can encrypt and decrypt files in the target path by rewriting the file\'s binary code.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\n\t" + 'obscuro [OPTION] [PATH]' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\n\t" + "Encrypt and decrypt files by rewriting their binary code.\n\n\t" + f'{encOpts[0]}, {encOpts[1]} \n\t\tUse this option to encrypt a particular file or all the files in the target directory. Subdirectories are skipped.' + "\n\n\t" + f'{decOpts[0]}, {decOpts[1]}\n\t\t' + "Use this option to decrypt a particular file or all the files in the target directory. Subdirectories are skipped." + "\n\n\t" + f'{recurOpts[0]}, {recurOpts[1]}' + "\n\t\t" + f'Use this option to encrypt and decrypt files recursively.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'obscuro {encOpts[0]} <target_path>' + "\n\t" + f'obscuro {decOpts[0]} <key_path> <target_path>' + "\n\t" + f'obscuro {recurOpts[0]} {encOpts[0]} <target_path>' + "\n\t" + f'obscuro {decOpts[0]} {encOpts[0]} <key_path> <target_path>' + "\n\t"
+helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\n\t" + 'obscuro - A command line encryption tool that can encrypt and decrypt files in the target path by rewriting the file\'s binary code.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\n\t" + 'obscuro [OPTIONS] [PATH]' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\n\t" + "Encrypt and decrypt files by rewriting their binary code.\n\n\t" + f'{encOpts[0]}, {encOpts[1]} \n\t\tUse this option to encrypt a particular file or all the files in the target directory. Subdirectories are skipped.' + "\n\n\t" + f'{decOpts[0]}, {decOpts[1]}\n\t\t' + "Use this option to decrypt a particular file or all the files in the target directory. Subdirectories are skipped." + "\n\n\t" + f'{recurOpts[0]}, {recurOpts[1]}' + "\n\t\t" + f'Use this option to encrypt and decrypt files recursively.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'obscuro {encOpts[0]} <target_path>' + "\n\t" + f'obscuro {decOpts[0]} <key_path> <target_path>' + "\n\t" + f'obscuro {recurOpts[0]} {encOpts[0]} <target_path>' + "\n\t" + f'obscuro {decOpts[0]} {encOpts[0]} <key_path> <target_path>' + "\n\t"
 
 # FUNCTIONS
 def main():
@@ -41,13 +41,13 @@ def main():
 
     # Checking if the second argument is not a help option.
     else:
-        # Cheking if the user entered a valid argument.
+        # Checking if the user entered a valid argument.
         if recurOpts[0] in argv or recurOpts[1] in argv or encOpts[0] in argv or encOpts[1] in argv or decOpts[0] in argv or decOpts[1] in argv:
             # Making sure the user is not entering same type of argument twice.
             if recurOpts[0] in argv and recurOpts[1] in argv:
                 print(f'You can\'t enter same type of argument twice. Type obscuro {helpOpts[0]} to get more information.')
                 exit()
-            # Checking the user entered a recursive option
+            # Checking if the user entered a recursive option
             elif recurOpts[0] in argv or recurOpts[1] in argv:
                 # Setting the recurise option choice to true.
                 recurChoice = True
@@ -56,7 +56,7 @@ def main():
                 # Setting the recurise option choice to false.
                 recurChoice = False
 
-            # Checking if the user enterd an encryption feature option
+            # Checking if the user entered an encryption feature option
             if encOpts[0] in argv or encOpts[1] in argv:
                 # Creating a path from the last argument in the list of arguments
                 targetP = Path(argv[-1])
@@ -67,7 +67,7 @@ def main():
                     encrypt(recurChoice, targetP)
                 # Checking if the target path is not exists.
                 else:
-                    # Informating the user about what went wrong and what he/she should do to get more information.
+                    # Informing the user about what went wrong and what he/she should do to get more information.
                     print(f'You didn\'t entered a valid path. Type obscuro {helpOpts[0]} to see the help page.')
 
             # Checking if the user entered a decryption feature option.
@@ -82,7 +82,7 @@ def main():
                     # Calling the decrypt function
                     decrypt(recurChoice, keyP, targetP)
 
-                # Checking if target path or key path or both are not exists.
+                # Checking if target path or key path or both paths are not exists.
                 else:
                     # Informing the user about what went wrong and he/she should do to get more information.
                     print(f'You didn\'t entered a valid path. Either key path or taget path isn\'t exist or both. Type obscuro {helpOpts[0]} to see the help page.')
@@ -112,22 +112,23 @@ def encrypt(recurChoice, targetP):
                 contents = theFile.read()
                 # Encrypting the contents
                 contentsEncrypted = Fernet(key).encrypt(contents)
-                # Writing the encrypted contents back to file
+                # Writing the encrypted contents back to a file
                 with open(targetP, "wb") as theFile:
                     theFile.write(contentsEncrypted)
-            # Priting the what happened.
+            # Printing what happened.
             print(f'File {targetP} is encrypted')
+
         # Checking if the target path is a directory.
         elif path.isdir(targetP) == True:
-            # Generating a encryption key
+            # Generating an encryption key
             key = Fernet.generate_key()
             # Printing the key content in debug mode.
             debug(f'Key Content = {key}')
-            # Opening a new file in binary mode to store the key
+            # Opening a new file in write binary mode to store the key
             with open("the_key.key", "wb") as theKey: # wb -> write binary
-                # Writing the key to file
+                # Writing the key to a file
                 theKey.write(key)
-            # Looping through each file in the target path
+            # Iterating through each file in the target path
             for file in listdir(targetP):
                 # Checking if file name is not obscuro or the_key.key
                 if file == "obscuro" or file == "the_key.key":
@@ -140,17 +141,17 @@ def encrypt(recurChoice, targetP):
                     # Appending the target path to the list of target file paths.
                     listOfTargetFilPs.append(targetFP)
 
-            # Looping through eeach file path in the list of target file paths.
+            # Iterating through each file path in the list of target file paths.
             for fileP in listOfTargetFilPs:
                 # Opening the file in read binary mode
                 with open(fileP, "rb") as theFile: # rb -> read binary
-                    # Creating a variable to store the contents.
+                    # Creating a variable to store it's contents.
                     contents = theFile.read()
                     # Encrypting the contents.
                     contentsEncrypted = Fernet(key).encrypt(contents)
                     # Opening the file in write binary mode.
                     with open(fileP, "wb") as theFile:
-                        # Writing the encrypted contents into file
+                        # Writing the encrypted contents into a file
                         theFile.write(contentsEncrypted)
 
             # Printing the list of encrypted files.
@@ -161,28 +162,28 @@ def encrypt(recurChoice, targetP):
             print("Target is not a file or a directory. Exiting the program...")
             exit()
 
-    # Checking if the encryption choice is true
+    # Checking if the recursive choice is true
     else:
         # Checking if the target path is not exists.
         if path.isfile(targetP) == False:
             # Generating an encryption key
             key = Fernet.generate_key()
-            # Printing the key content in debug mode.
+            # Printing the key's contents in debug mode.
             debug(f'Key Content = {key}')
             # Opening a new file in write binary mode to store the encryption key.
             with open("the_key.key", "wb") as theKey: # wb -> write binary
-                # Writing the encryption key to file
+                # Writing the encryption key to a file
                 theKey.write(key)
-            # Looping through path, directory names and file names recursively in starting from the target path
+            # Iterating through each path, directory name and file name recursively starting from the target path.
             for currentPath, dir, file in walk(targetP):
                 # Creating a folder path from the current path
                 folder = Path(currentPath)
                 # Appending the folder path to the list of target folder paths.
                 listOfTargetFolPs.append(folder)
 
-            # Looping through each path in the list of target folder paths.
+            # Iterating through each path in the list of target folder paths.
             for p in listOfTargetFolPs:
-                # Looping through each content of the folder(including files and folders together).
+                # Iterating through each content in the folder(including files, folders and etc all together).
                 for f in listdir(p):
                     # Creating a target path
                     target = Path(p,f)
@@ -191,7 +192,7 @@ def encrypt(recurChoice, targetP):
                         # Appending the file path to the list of target file paths.
                         listOfTargetFilPs.append(target)
 
-            # Looping through each target file path in the list of target file paths
+            # Iterating through each target file path in the list of target file paths
             for tf in listOfTargetFilPs:
                 # Opening the file in read binary mode
                 with open(tf, "rb") as theFile: # rb -> read binary
@@ -201,7 +202,7 @@ def encrypt(recurChoice, targetP):
                     contentsEncrypted = Fernet(key).encrypt(contents)
                     # Opening the file in write binary mode.
                     with open(tf, "wb") as theFile:
-                        # Writing the encrypted content into file
+                        # Writing the encrypted content into the file
                         theFile.write(contentsEncrypted)
 
             # Printing the list of encrypted files.
@@ -226,24 +227,24 @@ def decrypt(recurChoice, keyP, targetP):
             with open(targetP, "rb") as theFile: # rb -> read binary
                 # Reading the contents of the file
                 contents = theFile.read()
-                # Dencrypting the contents
+                # Decrypting the contents
                 contentsDecrypted = Fernet(secretKey).decrypt(contents)
                 # Opening the target file in write binary mode.
                 with open(targetP, "wb") as theFile:
-                    # Writing the decrypted content to file
+                    # Writing the decrypted content into the file
                     theFile.write(contentsDecrypted)
 
-            # Priting the what happened.
+            # Printing what happened.
             print(f'File {targetP} is decrypted')
 
-        # Checking the target path is not a file
+        # Checking if the target path is not a file
         elif path.isdir(targetP) == True:
             # Opening the key file in read binary mode
             with open(keyP, "rb") as key:
                 # Reading the contents of the file
                 secretKey = key.read()
 
-            # Looping through each file in the target path(Hint: It's identified that's it's not a file)
+            # Iterating through each file in the target path(Hint: It's identified that's not a file)
             for file in listdir(targetP):
                 # Checking if the file name is obscuro or the_key.key
                 if file == "obscuro" or file == "the_key.key":
@@ -255,23 +256,23 @@ def decrypt(recurChoice, keyP, targetP):
                 if path.isfile(targetFP) == True:
                     # Appending the target file path to the list of target file paths.
                     listOfTargetFilPs.append(targetFP)
-            # Looping through each file in the list of target file paths.
+            # Iterating through each file in the list of target file paths.
             for file in listOfTargetFilPs:
                 # Opening the file in read binary mode.
                 with open(file, "rb") as theFile: # rb -> read binary
                     # Reading the contents of the file.
                     contents = theFile.read()
-                    # Dencrypting the contents
+                    # Decrypting the contents
                     contentsDecrypted = Fernet(secretKey).decrypt(contents)
                     # Opening the file in write binary mode.
                     with open(file, "wb") as theFile:
                         # Writing the decrypted contents
                         theFile.write(contentsDecrypted)
 
-            # Print the list of decrypted files.
+            # Printing the list of decrypted files.
             print(f'List of decrypted files = {listOfTargetFilPs}')
 
-        # Exiting the program is the target is not a file or a directory
+        # Exiting the program if the target is not a file or a directory
         else:
             print("Target is not a file or a directory. Exiting the program...")
             exit()
@@ -284,15 +285,15 @@ def decrypt(recurChoice, keyP, targetP):
             with open(keyP, "rb") as key:
                 # Reading the contents of the file.
                 secretKey = key.read()
-            # Looping through the file system starting from the targetP for each current path, directory names and, file names.
+            # Iterating through the file system starting from the targetP for each current path, directory name and, file name.
             for currentPath, dir, file in walk(targetP):
                 # Creating a folder path from the current path
                 folder = Path(currentPath)
                 # Appending the folder to the list of target folder paths.
                 listOfTargetFolPs.append(folder)
-            # Looping through each folder path in the list of target folder paths.
+            # Iterating through each folder path in the list of target folder paths.
             for p in listOfTargetFolPs:
-                # Loopint through each file in each folder
+                # Iterating through each file in each folder
                 for f in listdir(p):
                     # Creating a target file path
                     targetFP = Path(p,f)
@@ -300,7 +301,7 @@ def decrypt(recurChoice, keyP, targetP):
                     if path.isfile(targetFP) == True:
                         # Appending the target file path to the list of target file paths.
                         listOfTargetFilPs.append(targetFP)
-            # Looping through each target file path in the list of target file paths.
+            # Iterating through each target file path in the list of target file paths.
             for tf in listOfTargetFilPs:
                 # Opening the target file path in read binary mode.
                 with open(tf, "rb") as theFile: # rb -> read binary
@@ -308,9 +309,9 @@ def decrypt(recurChoice, keyP, targetP):
                     contents = theFile.read()
                     # Decrypting the contents
                     contentsDecrypted = Fernet(secretKey).decrypt(contents)
-                    # Openingt the target file in write binary mode.
+                    # Opening the target file in write binary mode.
                     with open(tf, "wb") as theFile:
-                        # Writing the decrypted contents to file.
+                        # Writing the decrypted contents to the file.
                         theFile.write(contentsDecrypted)
             # Printing the list of decrypted files.
             print(f'List of decrypted files = {listOfTargetFilPs}')
