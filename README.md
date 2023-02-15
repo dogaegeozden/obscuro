@@ -8,8 +8,7 @@ Obscuro is a command line tool to encrypt or decrypt files or folder. You can al
 1) ```pip3 install cryptography```
 2) ```git clone https://github.com/dogaegeozden/obscuro.git```
 3) ```cd obscuro```
-4) ```sudo cp obscuro /usr/bin/```
-5) ```sudo chown $USER:$USER /usr/bin/obscuro && sudo chmod u+x /usr/bin/obscuro```
+4) ```sudo dpkg -i obscuro.deb```
 
 ## OPTIONS
     -e, --encrypt 
