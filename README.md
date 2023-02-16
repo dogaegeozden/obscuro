@@ -2,7 +2,7 @@
 
 ![ObscuroLogo](https://raw.githubusercontent.com/dogaegeozden/obscuro/main/obscuro.jpg)
 
-Obscuro is a command line tool to encrypt or decrypt files or folder. You can also encrypt or decrypt folders recursively by using the "-r" option. Otherwise, subdirectories will be skipped and only the files in the target folder will be encrypted.
+Obscuro is a command line tool to encrypt or decrypt files. It encrypts files by rewriting their binary code. 
 
 ## INSTALLATION 
 1) ```curl -L https://github.com/dogaegeozden/obscuro/releases/download/encryption/obscuro.deb -o obscuro.deb```
