@@ -6,7 +6,7 @@ Obscuro is a command line tool to encrypt or decrypt files or folder. You can al
 
 ## INSTALLATION 
 1) ```curl -L https://github.com/dogaegeozden/obscuro/releases/download/encryption/obscuro.deb -o obscuro.deb```
-2) ```dpkg -i obscuro.deb```
+2) ```sudo dpkg -i obscuro.deb```
 
 ## OPTIONS
     -e, --encrypt 
